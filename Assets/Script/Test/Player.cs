@@ -13,8 +13,10 @@ public class Player : MonoBehaviour
     
     Rigidbody2D m_rb;
     Vector2 move;
+    public Transform bulletPost;
+    public GameObject bullet;
 
-/*    float tagetRotation;*/
+    /*    float tagetRotation;*/
     public Transform tagetMonster;
 
     public Transform pointRotage;
@@ -34,6 +36,9 @@ public class Player : MonoBehaviour
         {
             transMonster[i] = monsters[i].transform;
         }*/
+        
+
+
 
     }
     
@@ -46,8 +51,22 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         Moving();
+        
+        
 
 
+    }
+    IEnumerator Shoot()
+    {
+        if (PointerDown)
+        {
+            yield return new WaitForSeconds(1f);
+            Instantiate(bullet, bulletPost.position, transform.rotation);
+
+            StartCoroutine(Shoot());
+        }
+
+        
     }
     private void LateUpdate()
     {
@@ -55,9 +74,13 @@ public class Player : MonoBehaviour
         {
             return;
         }
-        //TagetMonster();
-        //GetClosestEnemy(transMonster);
-        Rotation();
+        if (PointerDown)
+        {
+            Rotation();
+
+            StartCoroutine(Shoot());
+        }
+
     }
     void Rotation()
     {
@@ -65,10 +88,12 @@ public class Player : MonoBehaviour
         {
             return;
         }
-        //if (tagetMonster != null)
+
+
         Vector2 direction = (tagetMonster.gameObject.GetComponent<Rigidbody2D>().position - m_rb.position).normalized;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
-        //Debug.Log(angle);
+
+
         m_rb.rotation = angle;
     }
     
@@ -86,23 +111,8 @@ public class Player : MonoBehaviour
 
         transform.eulerAngles = new Vector3(0, 0, -zAxis);
         m_rb.MovePosition(m_rb.position + move * moveSpeed * Time.deltaTime);
-        //tagetRotation = m_rb.rotation;
+
     }
-    Transform GetClosestEnemy(Transform[] enemies)
-    {
-        Transform tMin = null;
-        float minDist = Mathf.Infinity;
-        Vector3 currentPos = transform.position;
-        foreach (Transform t in enemies)
-        {
-            float dist = Vector3.Distance(t.position, currentPos);
-            if (dist < minDist)
-            {
-                tMin = t;
-                minDist = dist;
-            }
-        }
-        return tMin;
-    }
+    
 
 }

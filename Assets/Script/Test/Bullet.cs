@@ -14,5 +14,7 @@ public class Bullet : MonoBehaviour
     private void Start()
     {
         rb.velocity = transform.up * speed;
+        Destroy(rb,4f);
     }
+
 }

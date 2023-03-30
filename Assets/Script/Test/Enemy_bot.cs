@@ -55,7 +55,7 @@ public class Enemy_bot : MonoBehaviour
         // Gọi event OnMonsterDefeated khi quái vật bị tiêu diệt
         if (OnMonsterDefeated != null)
         {
-            OnMonsterDefeated(this);
+            OnMonsterDefeated(this.gameObject);
         }
     }
 }
