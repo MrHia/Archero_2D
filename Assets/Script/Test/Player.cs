@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
@@ -7,10 +8,13 @@ public class Player : MonoBehaviour
 {
     public VariableJoystick joystick;
 
-
+    public GameObject[] monsters;
+    public Transform[] transMonster;
+    
     Rigidbody2D m_rb;
     Vector2 move;
-    float tagetRotation;
+
+/*    float tagetRotation;*/
     public Transform tagetMonster;
 
     public Transform pointRotage;
@@ -20,11 +24,19 @@ public class Player : MonoBehaviour
 
     public float moveSpeed;
 
+
     private void Start()
     {
 
         m_rb = GetComponent<Rigidbody2D>();
+        monsters = GameObject.FindGameObjectsWithTag("Monster");
+        /*for (int i = 0; i < monsters.Length; i++)
+        {
+            transMonster[i] = monsters[i].transform;
+        }*/
+
     }
+    
     private void Update()
     {
         move.x = joystick.Horizontal;
@@ -39,7 +51,12 @@ public class Player : MonoBehaviour
     }
     private void LateUpdate()
     {
+        if(monsters == null)
+        {
+            return;
+        }
         //TagetMonster();
+        //GetClosestEnemy(transMonster);
         Rotation();
     }
     void Rotation()
@@ -67,15 +84,25 @@ public class Player : MonoBehaviour
         float vAxis = move.y;
         float zAxis = Mathf.Atan2(hAxis, vAxis) * Mathf.Rad2Deg;
 
-
         transform.eulerAngles = new Vector3(0, 0, -zAxis);
         m_rb.MovePosition(m_rb.position + move * moveSpeed * Time.deltaTime);
-        tagetRotation = m_rb.rotation;
-
-
-
-
+        //tagetRotation = m_rb.rotation;
     }
-
+    Transform GetClosestEnemy(Transform[] enemies)
+    {
+        Transform tMin = null;
+        float minDist = Mathf.Infinity;
+        Vector3 currentPos = transform.position;
+        foreach (Transform t in enemies)
+        {
+            float dist = Vector3.Distance(t.position, currentPos);
+            if (dist < minDist)
+            {
+                tMin = t;
+                minDist = dist;
+            }
+        }
+        return tMin;
+    }
 
 }

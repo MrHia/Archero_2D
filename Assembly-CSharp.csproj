@@ -65,6 +65,7 @@
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\VariableJoystick.cs" />
     <Compile Include="Assets\Script\Test\Bullet.cs" />
     <Compile Include="Assets\Script\Test\Enemy_bot.cs" />
+    <Compile Include="Assets\Script\Test\GameManager.cs" />
     <Compile Include="Assets\Script\Test\Player.cs" />
   </ItemGroup>
   <ItemGroup>

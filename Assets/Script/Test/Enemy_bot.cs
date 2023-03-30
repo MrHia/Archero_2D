@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Net.Sockets;
+using System.Threading;
 using UnityEditor;
 using UnityEngine;
 
@@ -11,6 +12,9 @@ public class Enemy_bot : MonoBehaviour
     public Transform bulletPost;
     public GameObject bullet;
     public float speed=.3f;
+
+    public delegate void mosterDestroy(GameObject Enemy_bot);
+    public static event mosterDestroy OnMonsterDefeated;
 
     private void Awake()
     {
@@ -44,6 +48,15 @@ public class Enemy_bot : MonoBehaviour
         Instantiate(bullet,bulletPost.position,transform.rotation);
         
         StartCoroutine(Shoot());
+    }
+
+    private void OnDestroy()
+    {
+        // Gọi event OnMonsterDefeated khi quái vật bị tiêu diệt
+        if (OnMonsterDefeated != null)
+        {
+            OnMonsterDefeated(this);
+        }
     }
 }
     
