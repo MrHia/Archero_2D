@@ -67,6 +67,7 @@
     <Compile Include="Assets\Script\Test\Enemy_bot.cs" />
     <Compile Include="Assets\Script\Test\GameManager.cs" />
     <Compile Include="Assets\Script\Test\Player.cs" />
+    <Compile Include="Assets\Script\Test\Shooting.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

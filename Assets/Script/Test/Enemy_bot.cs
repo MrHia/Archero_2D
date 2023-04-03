@@ -13,8 +13,8 @@ public class Enemy_bot : MonoBehaviour
     public GameObject bullet;
     public float speed=.3f;
 
-    public delegate void mosterDestroy(GameObject Enemy_bot);
-    public static event mosterDestroy OnMonsterDefeated;
+    /*public delegate void mosterDestroy(GameObject Enemy_bot);
+    public static event mosterDestroy OnMonsterDefeated;*/
 
     private void Awake()
     {
@@ -23,7 +23,7 @@ public class Enemy_bot : MonoBehaviour
     }
     private void Start()
     {
-        StartCoroutine(Shoot());
+        //StartCoroutine(Shoot());
     }
     private void Update()
     {
@@ -52,11 +52,11 @@ public class Enemy_bot : MonoBehaviour
 
     private void OnDestroy()
     {
-        // Gọi event OnMonsterDefeated khi quái vật bị tiêu diệt
+        /*// Gọi event OnMonsterDefeated khi quái vật bị tiêu diệt
         if (OnMonsterDefeated != null)
         {
             OnMonsterDefeated(this.gameObject);
-        }
+        }*/
     }
 }
     
